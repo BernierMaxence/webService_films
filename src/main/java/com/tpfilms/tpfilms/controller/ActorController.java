@@ -2,34 +2,50 @@ package com.tpfilms.tpfilms.controller;
 
 
 import com.tpfilms.tpfilms.domain.Actor;
+import com.tpfilms.tpfilms.domain.Casting;
+import com.tpfilms.tpfilms.domain.Film;
 import com.tpfilms.tpfilms.service.ActorDao;
+import com.tpfilms.tpfilms.service.CastingDao;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RestController
 @RequestMapping(path="/actors")
 public class ActorController {
 
-    final ActorDao actorDao;
-
     @Autowired
-    public ActorController(ActorDao actorDao) {
-        this.actorDao = actorDao;
-    }
+     ActorDao actorDao;
+    //final FilmDao filmDao;
+    @Autowired
+    CastingDao castingDao;
 
-    @GetMapping(path="/")
-    @ResponseBody
+
+    @GetMapping(path="")
     public Iterable<Actor> getAll(){
         return actorDao.findAll();
     }
 
     @GetMapping(path="/{id}")
-    @ResponseBody
     public Actor getOne(@PathVariable int id){
         return actorDao.findById(id);
     }
+
+    /*@GetMapping(path="/{id}/casting")
+    public Iterable<Film> getCasting(@PathVariable int id) {
+        Actor actor = actorDao.findById(id);
+        List<Casting> castings = castingDao.findAll();
+        return null;
+     /*   ArrayList<Casting> castings = new ArrayList<>(castingDao.findAllByActor(actor));
+        List<Film> films =  castings.stream()
+                                    .map(Casting::getFilm)
+                                    .collect(Collectors.toList());
+        System.out.println(films);
+        return films;*/
+
+    //}
+
 }

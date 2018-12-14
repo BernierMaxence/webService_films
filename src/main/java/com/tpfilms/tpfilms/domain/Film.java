@@ -41,6 +41,7 @@ public class Film implements Serializable {
     private Category category;
 
     @OneToMany(mappedBy = "id_casting.film", fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("film")
     private List<Casting> casting = new ArrayList<Casting>();
 
     private String url_image;

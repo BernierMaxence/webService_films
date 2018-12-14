@@ -19,6 +19,11 @@ public class Casting implements Serializable{
     private Actor actor;
 
 
+    @ManyToOne
+    @JoinColumn(name = "id_film", insertable = false, updatable = false)
+    private Film film;
+
+
     @Column(name = "name")
     private String name;
 
@@ -30,13 +35,32 @@ public class Casting implements Serializable{
         return id_casting;
     }
 
+    public void setId_casting(CastingId id_casting) {
+        this.id_casting = id_casting;
+    }
 
     public Actor getActor() {
         return actor;
     }
 
+    public void setActor(Actor actor) {
+        this.actor = actor;
+    }
+
+    public Film getFilm() {
+        return film;
+    }
+
+    public void setFilm(Film film) {
+        this.film = film;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
 
