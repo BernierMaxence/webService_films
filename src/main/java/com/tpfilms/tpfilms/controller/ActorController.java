@@ -35,24 +35,30 @@ public class ActorController {
         return actorDao.findById(id);
     }
 
-    /*@GetMapping(path="/{id}/casting")
+    @GetMapping(path="/{id}/casting")
     public Iterable<Film> getCasting(@PathVariable int id) {
         Actor actor = actorDao.findById(id);
-        List<Casting> castings = castingDao.findAll();
-        return null;
-     /*   ArrayList<Casting> castings = new ArrayList<>(castingDao.findAllByActor(actor));
-        List<Film> films =  castings.stream()
-                                    .map(Casting::getFilm)
-                                    .collect(Collectors.toList());
-        System.out.println(films);
-        return films;*/
 
-    //}
+        ArrayList<Casting> castings = new ArrayList<>(castingDao.findAllByActor(actor));
+
+        List<Film> films = castings.stream()
+                .map(Casting::getFilm)
+                .collect(Collectors.toList());
+
+        return films;
+
+    }
 
     /* Put requests */
-    @PutMapping
+    @PutMapping(path = "/update")
     public Actor updateActor(@RequestBody Actor actor) {
         return actorDao.save(actor);
+    }
+
+    /* Delete Request */
+    @DeleteMapping(path = "/remove")
+    public  void deleteActor(@RequestBody Actor actor) {
+        actorDao.delete(actor);
     }
 
 }

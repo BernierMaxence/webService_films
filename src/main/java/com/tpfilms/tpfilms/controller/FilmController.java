@@ -41,9 +41,16 @@ public class FilmController {
 
     /* Put requests */
 
-    @PutMapping(path = "")
+    @PutMapping(path = "/update")
     public Film updateFilm (@RequestBody Film film) {
         return filmDao.save(film);
+    }
+
+    /* Delete Requests */
+
+    @DeleteMapping(path = "/remove")
+    public void removeFilm(@RequestBody Film film) {
+        filmDao.delete(film);
     }
 
 
