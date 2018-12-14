@@ -23,6 +23,7 @@ public class ActorController {
     @Autowired
     CastingDao castingDao;
 
+    /* Get requests */
 
     @GetMapping(path="")
     public Iterable<Actor> getAll(){
@@ -47,5 +48,11 @@ public class ActorController {
         return films;*/
 
     //}
+
+    /* Put requests */
+    @PutMapping
+    public Actor updateActor(@RequestBody Actor actor) {
+        return actorDao.save(actor);
+    }
 
 }

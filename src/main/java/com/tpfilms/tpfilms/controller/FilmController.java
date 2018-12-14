@@ -39,8 +39,12 @@ public class FilmController {
     }
 
 
+    /* Put requests */
 
-
+    @PutMapping(path = "")
+    public Film updateFilm (@RequestBody Film film) {
+        return filmDao.save(film);
+    }
 
 
 }
