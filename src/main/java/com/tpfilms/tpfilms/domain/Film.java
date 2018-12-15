@@ -24,6 +24,7 @@ public class Film implements Serializable {
     private float duration;
 
     @Column(name = "release_date")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date release_date;
 
     @Column(name = "budget")

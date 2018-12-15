@@ -24,9 +24,11 @@ public class Actor implements Serializable {
     private String first_name;
 
     @Column(name = "birth_date")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date birth_date;
 
     @Column(name = "death_date")
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date death_date;
 
 
