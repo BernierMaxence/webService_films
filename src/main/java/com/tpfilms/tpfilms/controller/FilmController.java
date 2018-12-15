@@ -8,13 +8,16 @@ import com.tpfilms.tpfilms.domain.Film;
 import com.tpfilms.tpfilms.service.CastingDao;
 import com.tpfilms.tpfilms.service.FilmDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
+
 @RestController
+@CrossOrigin
 @RequestMapping(path="/films") // This means URL's start with /demo (after Application path)
 public class FilmController {
 
