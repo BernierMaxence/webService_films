@@ -10,7 +10,7 @@ public class Category {
     @Id
     @Column(nullable = false, name = "id")
     @GeneratedValue(strategy= GenerationType.AUTO)
-    @JsonIgnore
+    //@JsonIgnore
     private String id;
 
     @Column(name = "name")
