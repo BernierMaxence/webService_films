@@ -29,9 +29,7 @@ public class FilmController {
         this.castingDao = castingDao;
         this.actorDao = actorDao;
     }
-
-    /* Get requests */
-
+    
     @GetMapping(path="")
     public Iterable<Film> getAllFilms() {
 
@@ -39,20 +37,10 @@ public class FilmController {
         //return castingDao.findAll();
     }
 
-
     @GetMapping(value = "/{id}")
     public Film byId(@PathVariable int id){
         return filmDao.findById(id);
     }
-
-
-    /* Put requests */
-
-    @PutMapping(path = "/update")
-    public Film updateFilm (@RequestBody Film film) {
-        return filmDao.save(film);
-    }
-
 
     @PostMapping(path = "/new")
     public ResponseEntity<String> addFilm (@RequestBody Film film) {
@@ -62,7 +50,7 @@ public class FilmController {
 
         film.setCasting(null);
         film = filmDao.save(film);
-        
+
         int filmId = film.getId();
 
         for (Casting casting : castings) {
@@ -76,14 +64,6 @@ public class FilmController {
         return new ResponseEntity<String>("Created", HttpStatus.CREATED);
     }
 
-
-
-    /* Delete Requests */
-
-    @DeleteMapping(path = "/remove")
-    public void removeFilm(@RequestBody Film film) {
-        filmDao.delete(film);
-    }
 
 
 }
