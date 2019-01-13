@@ -1,6 +1,7 @@
 package com.tpfilms.tpfilms.domain;
 
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -12,44 +13,41 @@ import java.util.*;
 public class Film implements Serializable {
 
     @Id
-    @Column(nullable = false, name = "id")
-    @GeneratedValue(strategy= GenerationType.AUTO)
-
+    @Column(nullable = false)
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "title")
     private String title;
 
-    @Column(name = "duration")
     private float duration;
 
-    @Column(name = "release_date")
-    @JsonFormat(pattern="dd-MM-yyyy")
-    private Date release_date;
-
-    @Column(name = "budget")
     private int budget;
 
-    @Column(name = "revenue")
     private int revenue;
+
+    @JsonFormat(pattern="dd-MM-yyyy")
+    private Date release_date;
 
     @OneToOne()
     @JoinColumn(name="id_director")
     private Director director;
 
-    @OneToOne()
+    @OneToOne
     @JoinColumn(name="id_category")
     private Category category;
 
-    @OneToMany(mappedBy = "id_casting.film", fetch = FetchType.EAGER)
+    //@OneToMany(mappedBy = "film", fetch = FetchType.LAZY, cascade=CascadeType.ALL )
+    @OneToMany(mappedBy = "id_casting.film", cascade=CascadeType.ALL)
     @JsonIgnoreProperties("film")
     private List<Casting> casting = new ArrayList<Casting>();
 
     private String url_image;
 
+
     public Film() {
 
     }
+
 
     public int getId() {
         return id;
@@ -129,5 +127,21 @@ public class Film implements Serializable {
 
     public void setCasting(List<Casting> casting) {
         this.casting = casting;
+    }
+
+    @Override
+    public String toString() {
+        return "Film{" + "\n"+
+                "id=" + id +"\n"+
+                ", title='" + title + '\'' +"\n"+
+                ", duration=" + duration +"\n"+
+                ", release_date=" + release_date +"\n"+
+                ", budget=" + budget +"\n"+
+                ", revenue=" + revenue +"\n"+
+                ", director=" + director +"\n"+
+                ", category=" + category +"\n"+
+                ", casting=" + casting +"\n"+
+                ", url_image='" + url_image + '\'' +"\n"+
+                '}';
     }
 }

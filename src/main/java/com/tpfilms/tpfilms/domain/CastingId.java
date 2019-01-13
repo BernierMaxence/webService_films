@@ -2,48 +2,59 @@ package com.tpfilms.tpfilms.domain;
 
 
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Embeddable
+@Table(name = "film_actor")
 public class CastingId implements Serializable {
-
 
     @Column(name = "id_film")
     private int film;
 
-    @Column(name = "id_actor", insertable=false ,updatable=false)
+    @Column(name = "id_actor")
     private int actor;
 
 
-    public CastingId() {
+    /*@ManyToOne
+    @JoinColumn(name = "id_film")
+    private Film film;
 
+    @ManyToOne
+    @JoinColumn(name = "id_actor")
+    private Actor actor;*/
+
+    public CastingId() {
     }
 
-    public int getActor() {
-        return actor;
+    public CastingId(int film, int actor) {
+        this.film = film;
+        this.actor = actor;
     }
 
     public int getFilm() {
         return film;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CastingId castingId = (CastingId) o;
-        return Objects.equals(getFilm(), castingId.getFilm()) &&
-                Objects.equals(getActor(), castingId.getActor());
+    public void setFilm(int film) {
+        this.film = film;
+    }
+
+    public int getActor() {
+        return actor;
+    }
+
+    public void setActor(int actor) {
+        this.actor = actor;
     }
 
     @Override
-    public int hashCode() {
-
-        return Objects.hash(getFilm(), getActor());
+    public String toString() {
+        return "CastingId{" +"\n"+
+                "film=" + film +"\n"+
+                ", actor=" + actor +"\n"+
+                '}';
     }
 }
 

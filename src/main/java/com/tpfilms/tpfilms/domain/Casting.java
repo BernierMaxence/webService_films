@@ -1,35 +1,29 @@
 package com.tpfilms.tpfilms.domain;
 
-import com.fasterxml.jackson.annotation.*;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "film_actor")
-
 public class Casting implements Serializable{
 
     @EmbeddedId
-    @JsonIgnore
     private CastingId id_casting;
 
-    @ManyToOne
-    @JoinColumn(name = "id_actor", insertable = false, updatable = false)
+   /* @ManyToOne
+    @JoinColumn(name = "id_actor", insertable=false, updatable=false)*/
+
+    @OneToOne
+    @JoinColumn(name="id_actor",  insertable=false, updatable=false)
     private Actor actor;
-
-
-    @ManyToOne
-    @JoinColumn(name = "id_film", insertable = false, updatable = false)
-    private Film film;
 
 
     @Column(name = "name")
     private String name;
 
-
     public Casting() {
     }
+
 
     public CastingId getId_casting() {
         return id_casting;
@@ -47,13 +41,7 @@ public class Casting implements Serializable{
         this.actor = actor;
     }
 
-    public Film getFilm() {
-        return film;
-    }
 
-    public void setFilm(Film film) {
-        this.film = film;
-    }
 
     public String getName() {
         return name;
@@ -61,6 +49,15 @@ public class Casting implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "Casting{" +"\n"+
+                "id_casting=" + id_casting +"\n"+
+                ", actor=" + actor +"\n"+
+                ", name='" + name + '\'' +"\n"+
+                '}';
     }
 }
 

@@ -4,13 +4,9 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
-
-//@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property = "id")
 public class Actor implements Serializable {
     @Id
     @Column(nullable = false, name = "id")
@@ -24,21 +20,16 @@ public class Actor implements Serializable {
     private String first_name;
 
     @Column(name = "birth_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date birth_date;
 
     @Column(name = "death_date")
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date death_date;
-
 
     private String url_image;
 
     public Actor() {
-    }
-
-    public String getFirst_name() {
-        return first_name;
     }
 
     public int getId() {
@@ -55,6 +46,10 @@ public class Actor implements Serializable {
 
     public void setLast_name(String last_name) {
         this.last_name = last_name;
+    }
+
+    public String getFirst_name() {
+        return first_name;
     }
 
     public void setFirst_name(String first_name) {
@@ -83,5 +78,20 @@ public class Actor implements Serializable {
 
     public void setUrl_image(String url_image) {
         this.url_image = url_image;
+    }
+
+
+
+
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id=" + id +
+                ", last_name='" + last_name + '\'' +
+                ", first_name='" + first_name + '\'' +
+                ", birth_date=" + birth_date +
+                ", death_date=" + death_date +
+                ", url_image='" + url_image + '\'' +
+                '}';
     }
 }

@@ -38,7 +38,7 @@ public class ActorController {
 
     @GetMapping(path="/{id}/casting")
     public Iterable<Film> getCasting(@PathVariable int id) {
-        Actor actor = actorDao.findById(id);
+        /*Actor actor = actorDao.findById(id);
 
         ArrayList<Casting> castings = new ArrayList<>(castingDao.findAllByActor(actor));
 
@@ -46,7 +46,8 @@ public class ActorController {
                 .map(Casting::getFilm)
                 .collect(Collectors.toList());
 
-        return films;
+        return films;*/
+        return null;
 
     }
 

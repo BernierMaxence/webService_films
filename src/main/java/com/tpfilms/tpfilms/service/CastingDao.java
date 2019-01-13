@@ -13,5 +13,5 @@ import java.util.List;
 @Repository
 public interface CastingDao extends JpaRepository<Casting, Integer> {
 
-    List<Casting> findAllByActor(Actor actor);
+    //List<Casting> findAllByActor(Actor actor);
 }

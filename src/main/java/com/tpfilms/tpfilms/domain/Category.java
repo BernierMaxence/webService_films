@@ -1,6 +1,5 @@
 package com.tpfilms.tpfilms.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -9,8 +8,6 @@ public class Category {
 
     @Id
     @Column(nullable = false, name = "id")
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @JsonIgnore
     private String id;
 
     @Column(name = "name")
@@ -29,5 +26,13 @@ public class Category {
 
     public String getName() {
         return name;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
