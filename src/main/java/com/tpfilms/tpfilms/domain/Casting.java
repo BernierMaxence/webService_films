@@ -13,7 +13,7 @@ public class Casting implements Serializable{
    /* @ManyToOne
     @JoinColumn(name = "id_actor", insertable=false, updatable=false)*/
 
-    @OneToOne
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="id_actor",  insertable=false, updatable=false)
     private Actor actor;
 
