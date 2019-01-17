@@ -28,11 +28,11 @@ public class Film implements Serializable {
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date release_date;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="id_director")
     private Director director;
 
-    @OneToOne(cascade=CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name="id_category")
     private Category category;
 
@@ -144,4 +144,5 @@ public class Film implements Serializable {
                 ", url_image='" + url_image + '\'' +"\n"+
                 '}';
     }
+
 }
