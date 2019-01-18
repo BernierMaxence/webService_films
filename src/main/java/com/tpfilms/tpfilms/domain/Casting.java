@@ -1,5 +1,8 @@
 package com.tpfilms.tpfilms.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.data.annotation.Id;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -10,11 +13,14 @@ public class Casting implements Serializable{
     @EmbeddedId
     private CastingId id_casting;
 
-   /* @ManyToOne
-    @JoinColumn(name = "id_actor", insertable=false, updatable=false)*/
+    @ManyToOne
+    @JoinColumn(name = "id_film", insertable=false, updatable=false)
+    @JsonIgnoreProperties("casting")
+    private Film film;
 
     @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="id_actor",  insertable=false, updatable=false)
+    @JsonIgnoreProperties("casting")
     private Actor actor;
 
 
@@ -55,9 +61,20 @@ public class Casting implements Serializable{
     public String toString() {
         return "Casting{" +"\n"+
                 "id_casting=" + id_casting +"\n"+
+                ", film=" + film +"\n"+
                 ", actor=" + actor +"\n"+
-                ", name='" + name + '\'' +"\n"+
+                ", name='" + name + '\'' +
                 '}';
     }
+
+    public Film getFilm() {
+        return film;
+    }
+
+    public void setFilm(Film film) {
+        this.film = film;
+    }
+
+
 }
 

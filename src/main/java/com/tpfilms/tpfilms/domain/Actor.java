@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Actor implements Serializable {
@@ -14,10 +16,10 @@ public class Actor implements Serializable {
     private int id;
 
     @Column(name = "last_name")
-    private String last_name;
+    private String lastName;
 
     @Column(name = "first_name")
-    private String first_name;
+    private String firstName;
 
     @Column(name = "birth_date")
     @JsonFormat(pattern="dd-MM-yyyy")
@@ -27,9 +29,21 @@ public class Actor implements Serializable {
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date death_date;
 
+    @OneToMany(mappedBy = "actor", cascade=CascadeType.ALL)
+    @JsonIgnoreProperties({"id_casting", "actor"})
+    private List<Casting> casting = new ArrayList<Casting>();
+
     private String url_image;
 
     public Actor() {
+    }
+
+    public List<Casting> getCasting() {
+        return casting;
+    }
+
+    public void setCasting(List<Casting> casting) {
+        this.casting = casting;
     }
 
     public int getId() {
@@ -40,20 +54,20 @@ public class Actor implements Serializable {
         this.id = id;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getLastName() {
+        return lastName;
     }
 
-    public void setLast_name(String last_name) {
-        this.last_name = last_name;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setFirst_name(String first_name) {
-        this.first_name = first_name;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     public Date getBirth_date() {
@@ -81,17 +95,4 @@ public class Actor implements Serializable {
     }
 
 
-
-
-    @Override
-    public String toString() {
-        return "Actor{" +
-                "id=" + id +
-                ", last_name='" + last_name + '\'' +
-                ", first_name='" + first_name + '\'' +
-                ", birth_date=" + birth_date +
-                ", death_date=" + death_date +
-                ", url_image='" + url_image + '\'' +
-                '}';
-    }
 }

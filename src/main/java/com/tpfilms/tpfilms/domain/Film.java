@@ -28,26 +28,23 @@ public class Film implements Serializable {
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date release_date;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="id_director")
     private Director director;
 
-    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="id_category")
     private Category category;
 
-    //@OneToMany(mappedBy = "film", fetch = FetchType.LAZY, cascade=CascadeType.ALL )
-    @OneToMany(mappedBy = "id_casting.film", cascade=CascadeType.ALL)
-    @JsonIgnoreProperties("film")
+    @OneToMany(mappedBy = "film", cascade=CascadeType.ALL)
+    @JsonIgnoreProperties({"id_casting", "film"})
     private List<Casting> casting = new ArrayList<Casting>();
 
     private String url_image;
 
-
     public Film() {
 
     }
-
 
     public int getId() {
         return id;
@@ -127,22 +124,6 @@ public class Film implements Serializable {
 
     public void setCasting(List<Casting> casting) {
         this.casting = casting;
-    }
-
-    @Override
-    public String toString() {
-        return "Film{" + "\n"+
-                "id=" + id +"\n"+
-                ", title='" + title + '\'' +"\n"+
-                ", duration=" + duration +"\n"+
-                ", release_date=" + release_date +"\n"+
-                ", budget=" + budget +"\n"+
-                ", revenue=" + revenue +"\n"+
-                ", director=" + director +"\n"+
-                ", category=" + category +"\n"+
-                ", casting=" + casting +"\n"+
-                ", url_image='" + url_image + '\'' +"\n"+
-                '}';
     }
 
 }

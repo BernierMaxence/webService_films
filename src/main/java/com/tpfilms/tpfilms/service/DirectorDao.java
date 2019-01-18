@@ -7,4 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DirectorDao extends JpaRepository<Director, Integer> {
+
+    Director findByLastName(String lastName);
 }

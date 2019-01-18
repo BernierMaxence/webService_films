@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface ActorDao extends JpaRepository<Actor, Integer> {
     public Actor findById(int id);
 
+    public Actor findByLastName(String lastName);
 }
