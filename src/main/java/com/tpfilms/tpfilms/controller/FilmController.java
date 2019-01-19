@@ -40,9 +40,7 @@ public class FilmController {
 
     @GetMapping(path="")
     public Iterable<Film> getAllFilms() {
-
         return filmDao.findAll();
-        //return castingDao.findAll();
     }
 
     @GetMapping(value = "/{id}")
@@ -50,17 +48,42 @@ public class FilmController {
         return filmDao.findById(id);
     }
 
+    @GetMapping(path = "/category/{category}")
+    public Iterable<Film> getAllFilmsById(@PathVariable String category) {
+        return filmDao.findAllByCategory(categoryDao.findById(category));
+    }
+
+    @GetMapping(path = "/search")
+    public Iterable<Film> getSearchResults(@RequestParam("word") String word) {
+        List<Film> films = new ArrayList<>();
+
+        List<Film> filmsByDirector = filmDao.findAllByDirector(directorDao.findByLastName(word));
+        List<Film> filmsByTitle = filmDao.findAllByTitle(word);
+
+
+        films.addAll(filmsByDirector);
+        films.addAll(filmsByTitle);
+
+        List<Casting> castings = castingDao.findAllByActor(actorDao.findByLastName(word));
+        for (Casting casting : castings) {
+            films.add(casting.getFilm());
+        }
+
+        return films;
+    }
+
     @PutMapping(value = "")
     public ResponseEntity putRequest(@RequestBody Film film) {
-        System.out.println(film);
 
-        List<Casting> castings = film.getCasting();
+        Film f = filmDao.findById(film.getId());
+        List<Casting> casting = castingDao.findAllByFilm(f);
+        film.setCasting(casting);
+
         Optional<Director> director = directorDao.findById(film.getDirector().getId());
         film.setDirector(director.get());
 
         Category category = categoryDao.findById(film.getCategory().getId());
         film.setCategory(category);
-
 
         filmDao.save(film);
 
@@ -124,35 +147,13 @@ public class FilmController {
         casting.setActor(actor);
         System.out.println(actor);
 
-        Casting c = castingDao.getByActorAndFilm(actor, film);
+        Casting c = castingDao.findAllByActorAndFilm(actor, film);
 
         System.out.println(c);
         castingDao.delete(c);
     }
 
-    @GetMapping(path = "/category/{category}")
-    public Iterable<Film> getAllFilmsById(@PathVariable String category) {
-        return filmDao.findAllByCategory(categoryDao.findById(category));
-    }
 
-    @GetMapping(path = "/search")
-    public Iterable<Film> getSearchResults(@RequestParam("word") String word) {
-        List<Film> films = new ArrayList<>();
-
-        List<Film> filmsByDirector = filmDao.findAllByDirector(directorDao.findByLastName(word));
-        List<Film> filmsByTitle = filmDao.findAllByTitle(word);
-
-
-        films.addAll(filmsByDirector);
-        films.addAll(filmsByTitle);
-
-        List<Casting> castings = castingDao.findAllByActor(actorDao.findByLastName(word));
-        for (Casting casting : castings) {
-            films.add(casting.getFilm());
-        }
-
-        return films;
-    }
 
 
 }

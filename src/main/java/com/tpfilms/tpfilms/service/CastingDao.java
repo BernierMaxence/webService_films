@@ -16,9 +16,12 @@ public interface CastingDao extends JpaRepository<Casting, Integer> {
 
     List<Casting> findAllByActor(Actor actor);
 
-    Casting getByActorAndFilm(Actor actor, Film film);
+    List<Casting> findAllByFilm(Film film);
+
+    Casting findAllByActorAndFilm(Actor actor, Film film);
 
     void deleteByFilm(Film film);
+
     void deleteByActor(Actor actor);
 
 }
