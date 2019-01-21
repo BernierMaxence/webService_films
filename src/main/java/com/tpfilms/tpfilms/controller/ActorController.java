@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -38,6 +39,13 @@ public class ActorController {
         return actorDao.findById(id);
     }
 
+    @GetMapping(path = "/search")
+    public Iterable<Actor> getSearchResults(@RequestParam("word") String word) {
+        List<Actor> actors = new ArrayList<>();
+        actors.addAll(actorDao.findAllByFirstName(word));
+        actors.addAll(actorDao.findAllByLastName(word));
+        return actors;
+    }
 
     /* Put requests */
     @PutMapping(path = "/update")

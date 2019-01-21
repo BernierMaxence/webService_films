@@ -5,6 +5,7 @@ package com.tpfilms.tpfilms.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Embeddable
 @Table(name = "film_actor")
@@ -55,6 +56,20 @@ public class CastingId implements Serializable {
                 "film=" + film +"\n"+
                 ", actor=" + actor +"\n"+
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CastingId castingId = (CastingId) o;
+        return film == castingId.film &&
+                actor == castingId.actor;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(film, actor);
     }
 }
 
