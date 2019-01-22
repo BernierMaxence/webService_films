@@ -94,5 +94,10 @@ public class Actor implements Serializable {
         this.url_image = url_image;
     }
 
-
+    @Override
+    public String toString() {
+        return "Actor{" +
+                "id=" + id +
+                '}';
+    }
 }

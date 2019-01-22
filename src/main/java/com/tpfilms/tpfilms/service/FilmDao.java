@@ -20,5 +20,6 @@ public interface FilmDao extends JpaRepository<Film, Integer> {
 
     List<Film> findAllByTitle(String title);
 
+    Film findByTitle(String title);
 
 }

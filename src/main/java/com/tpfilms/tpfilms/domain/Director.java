@@ -7,7 +7,6 @@ public class Director {
 
     @Id
     @Column(nullable = false, name = "id")
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
     @Column(name = "first_name")
@@ -15,6 +14,10 @@ public class Director {
 
     @Column(name = "last_name")
     private String lastName;
+
+    public Director(int id) {
+        this.id = id;
+    }
 
     public Director() {
     }
@@ -41,5 +44,14 @@ public class Director {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Override
+    public String toString() {
+        return "Director{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                '}';
     }
 }

@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 public interface DirectorDao extends JpaRepository<Director, Integer> {
 
     Director findByLastName(String lastName);
+
+    Director findById(int id);
 }

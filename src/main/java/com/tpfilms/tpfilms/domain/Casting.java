@@ -61,7 +61,6 @@ public class Casting implements Serializable{
     public String toString() {
         return "Casting{" +"\n"+
                 "id_casting=" + id_casting +"\n"+
-                ", film=" + film +"\n"+
                 ", actor=" + actor +"\n"+
                 ", name='" + name + '\'' +
                 '}';

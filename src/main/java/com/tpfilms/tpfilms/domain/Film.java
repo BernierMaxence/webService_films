@@ -126,4 +126,20 @@ public class Film implements Serializable {
         this.casting = casting;
     }
 
+    @Override
+    public String toString() {
+        return "Film{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", duration=" + duration +
+                ", budget=" + budget +
+                ", revenue=" + revenue +
+                ", release_date=" + release_date +
+                ", director=" + director +
+                ", category=" + category +
+                ", casting=" + casting +
+                ", url_image='" + url_image + '\'' +
+                '}';
+    }
+
 }

@@ -16,7 +16,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin
-@RequestMapping(path="/films") // This means URL's start with /demo (after Application path)
+@RequestMapping(path="/films")
 public class FilmController {
 
     final private FilmDao filmDao;
@@ -72,14 +72,56 @@ public class FilmController {
         return films;
     }
 
+
     @PutMapping(value = "")
     public ResponseEntity putRequest(@RequestBody Film film) {
+
+        // Set director
+        Optional<Director> director = Optional.ofNullable(directorDao.findById(film.getDirector().getId()));
+        film.setDirector(director.get());
+
+        // Set category
+        Category category = categoryDao.findById(film.getCategory().getName());
+        film.setCategory(category);
+
+        // Empty casting
+        List<Casting> recivedCasting = film.getCasting();
+
+        film.setCasting(new ArrayList<>());
+
+        // Save film
+         filmDao.save(film);
+
+        Film f = filmDao.findByTitle(film.getTitle());
+        CastingId cId;
+        for (Casting c : recivedCasting) {
+            System.out.println("Casting avant : "+c);
+            c.setName("");
+            c.setFilm(f);
+            c.setActor(actorDao.findById(c.getActor().getId()));
+
+            int i = f.getId();
+            Actor a =c.getActor();
+            int ia = a.getId();
+            cId = new CastingId(i, ia);
+
+            c.setId_casting(cId);
+            System.out.println("Casting après : "+c);
+            castingDao.save(c);
+
+        }
+
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/update")
+    public ResponseEntity updateFilm(@RequestBody Film film) {
 
         Film f = filmDao.findById(film.getId());
         List<Casting> casting = castingDao.findAllByFilm(f);
         film.setCasting(casting);
 
-        Optional<Director> director = directorDao.findById(film.getDirector().getId());
+        Optional<Director> director = Optional.ofNullable(directorDao.findById(film.getDirector().getId()));
         film.setDirector(director.get());
 
         Category category = categoryDao.findById(film.getCategory().getId());
@@ -87,7 +129,7 @@ public class FilmController {
 
         filmDao.save(film);
 
-    return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
     }
 
 
@@ -114,7 +156,7 @@ public class FilmController {
 
         castingDao.saveAll(castings);
 
-        return new ResponseEntity<String>("Created", HttpStatus.CREATED);
+        return new ResponseEntity<>("Created", HttpStatus.CREATED);
     }
 
     @Transactional
