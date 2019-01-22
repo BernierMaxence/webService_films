@@ -25,7 +25,8 @@ public class Film implements Serializable {
 
     private int revenue;
 
-    @JsonFormat(pattern="dd-MM-yyyy")
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+2")
     private Date release_date;
 
     @OneToOne(cascade=CascadeType.ALL)
@@ -36,8 +37,7 @@ public class Film implements Serializable {
     @JoinColumn(name="id_category")
     private Category category;
 
-    @OneToMany(mappedBy = "film", cascade=CascadeType.ALL)
-    @JsonIgnoreProperties({"id_casting", "film"})
+    @OneToMany(mappedBy = "film", cascade=CascadeType.REMOVE)
     private List<Casting> casting = new ArrayList<Casting>();
 
     private String url_image;
@@ -141,5 +141,7 @@ public class Film implements Serializable {
                 ", url_image='" + url_image + '\'' +
                 '}';
     }
+
+    
 
 }

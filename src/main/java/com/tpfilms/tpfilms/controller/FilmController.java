@@ -76,6 +76,8 @@ public class FilmController {
     @PutMapping(value = "")
     public ResponseEntity putRequest(@RequestBody Film film) {
 
+
+
         // Set director
         Optional<Director> director = Optional.ofNullable(directorDao.findById(film.getDirector().getId()));
         film.setDirector(director.get());
@@ -95,7 +97,6 @@ public class FilmController {
         Film f = filmDao.findByTitle(film.getTitle());
         CastingId cId;
         for (Casting c : recivedCasting) {
-            System.out.println("Casting avant : "+c);
             c.setName("");
             c.setFilm(f);
             c.setActor(actorDao.findById(c.getActor().getId()));
@@ -106,7 +107,6 @@ public class FilmController {
             cId = new CastingId(i, ia);
 
             c.setId_casting(cId);
-            System.out.println("Casting après : "+c);
             castingDao.save(c);
 
         }
@@ -134,11 +134,12 @@ public class FilmController {
 
 
 
-    @PostMapping(path = "/new")
+    /*@PostMapping(path = "/new")
     public ResponseEntity<String> addFilm (@RequestBody Film film, HttpEntity<String> httpEntity) {
 
-        String json = httpEntity.getBody();
-        System.out.print(json);
+
+
+//        String json = httpEntity.getBody();
 
 
         List<Casting> castings = film.getCasting();
@@ -157,13 +158,15 @@ public class FilmController {
         castingDao.saveAll(castings);
 
         return new ResponseEntity<>("Created", HttpStatus.CREATED);
-    }
+    }*/
 
     @Transactional
     @DeleteMapping(path="/remove/{id}")
     public ResponseEntity deleteMovie(@PathVariable int id) {
-        System.out.println("id : "+id);
+
         Film film = filmDao.findById(id);
+
+
         castingDao.deleteByFilm(film);
 
         film.setCasting(null);
@@ -180,20 +183,17 @@ public class FilmController {
         castingDao.save(casting);
     }
 
-    @DeleteMapping(path = "/casting")
+    /*@DeleteMapping(path = "/casting")
     public void removeCharacterFromCasting(@RequestBody Casting casting) {
         Film film = filmDao.findById(casting.getId_casting().getFilm());
         casting.setFilm(film);
-        System.out.println(film);
         Actor actor = actorDao.findById(casting.getId_casting().getActor());
         casting.setActor(actor);
-        System.out.println(actor);
 
         Casting c = castingDao.findAllByActorAndFilm(actor, film);
 
-        System.out.println(c);
         castingDao.delete(c);
-    }
+    }*/
 
 
 

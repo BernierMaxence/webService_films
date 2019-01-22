@@ -12,7 +12,6 @@ import java.util.List;
 public class Actor implements Serializable {
     @Id
     @Column(nullable = false, name = "id")
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private int id;
 
     @Column(name = "last_name")
@@ -22,11 +21,14 @@ public class Actor implements Serializable {
     private String firstName;
 
     @Column(name = "birth_date")
-    @JsonFormat(pattern="dd-MM-yyyy")
+    // @JsonFormat(pattern="dd-MM-yyyy")
+    // @JsonFormat(pattern="yyyy-mm-dd ")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+1")
     private Date birth_date;
 
     @Column(name = "death_date")
-    @JsonFormat(pattern="dd-MM-yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+1")
+    // @JsonFormat(pattern="yyyy-MM-dd")
     private Date death_date;
 
     @OneToMany(mappedBy = "actor", cascade=CascadeType.ALL)
@@ -98,6 +100,10 @@ public class Actor implements Serializable {
     public String toString() {
         return "Actor{" +
                 "id=" + id +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", birth_date=" + birth_date +
+                ", death_date=" + death_date +
                 '}';
     }
 }

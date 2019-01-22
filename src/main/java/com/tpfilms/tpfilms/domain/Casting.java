@@ -13,12 +13,13 @@ public class Casting implements Serializable{
     @EmbeddedId
     private CastingId id_casting;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_film", insertable=false, updatable=false)
     @JsonIgnoreProperties("casting")
     private Film film;
 
-    @OneToOne(cascade=CascadeType.ALL)
+//    @OneToOne(cascade=CascadeType.ALL)
+    @ManyToOne(cascade=CascadeType.ALL)
     @JoinColumn(name="id_actor",  insertable=false, updatable=false)
     @JsonIgnoreProperties("casting")
     private Actor actor;
@@ -74,6 +75,10 @@ public class Casting implements Serializable{
         this.film = film;
     }
 
-
+    @PreRemove
+    public void preRemove() {
+        this.actor = null;
+        this.film = null;
+    }
 }
 
