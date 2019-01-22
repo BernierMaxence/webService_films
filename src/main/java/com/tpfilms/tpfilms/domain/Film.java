@@ -26,7 +26,7 @@ public class Film implements Serializable {
     private int revenue;
 
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+2")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "GMT+1")
     private Date release_date;
 
     @OneToOne(cascade=CascadeType.ALL)
@@ -142,6 +142,6 @@ public class Film implements Serializable {
                 '}';
     }
 
-    
+
 
 }

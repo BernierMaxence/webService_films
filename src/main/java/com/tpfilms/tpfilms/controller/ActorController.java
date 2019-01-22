@@ -68,7 +68,6 @@ public class ActorController {
     public ResponseEntity<Object> addActor(@RequestBody Actor actor) {
 
 
-//        "birth_date":"2019-01-01","death_date":"2019-01-06"}
 
         System.out.println("Recived actor "+actor);
         actor.setCasting(new ArrayList<>());
