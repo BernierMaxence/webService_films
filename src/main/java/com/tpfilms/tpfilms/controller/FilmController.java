@@ -83,7 +83,7 @@ public class FilmController {
         film.setDirector(director.get());
 
         // Set category
-        Category category = categoryDao.findById(film.getCategory().getName());
+        Category category = categoryDao.findById(film.getCategory().getId());
         film.setCategory(category);
 
         // Empty casting
@@ -97,7 +97,7 @@ public class FilmController {
         Film f = filmDao.findByTitle(film.getTitle());
         CastingId cId;
         for (Casting c : recivedCasting) {
-            c.setName("");
+            c.setName(c.getName());
             c.setFilm(f);
             c.setActor(actorDao.findById(c.getActor().getId()));
 
@@ -114,10 +114,32 @@ public class FilmController {
         return ResponseEntity.ok().build();
     }
 
+    private void updateCasting(Film film, List<Casting> newCasting) {
+        //Delete casting
+        for(Casting c : film.getCasting())
+        {
+            if(!newCasting.stream().anyMatch(cNew -> cNew.getId_casting() == c.getId_casting()))
+            {
+                castingDao.delete(c);
+            }
+        }
+
+        for(Casting cNew : newCasting)
+        {
+            if(!film.getCasting().stream().anyMatch(cOld -> cOld.getId_casting() == cNew.getId_casting()))
+            {
+                CastingId cId = new CastingId(film.getId(), cNew.getActor().getId());
+                cNew.setId_casting(cId);
+                castingDao.save(cNew);
+            }
+        }
+    }
+
     @PutMapping(value = "/update")
     public ResponseEntity updateFilm(@RequestBody Film film) {
 
         Film f = filmDao.findById(film.getId());
+        updateCasting(f, film.getCasting());
         List<Casting> casting = castingDao.findAllByFilm(f);
         film.setCasting(casting);
 

@@ -56,19 +56,20 @@ public class ActorController {
     /* Put requests */
     @PutMapping(path = "/update")
     public Actor updateAndSaveActor(@RequestBody Actor actor) {
-
+        Actor updatedActor = actorDao.findById(actor.getId());
+        updatedActor.setFirstName(actor.getFirstName());
+        updatedActor.setLastName(actor.getLastName());
+        updatedActor.setBirth_date(actor.getBirth_date());
+        updatedActor.setDeath_date(actor.getDeath_date());
         List<Casting> casting = castingDao.findAllByActor(actor);
 
-        actor.setCasting(casting);
+        updatedActor.setCasting(casting);
 
-        return actorDao.save(actor);
+        return actorDao.save(updatedActor);
     }
 
     @PutMapping(path="")
     public ResponseEntity<Object> addActor(@RequestBody Actor actor) {
-
-
-
         System.out.println("Recived actor "+actor);
         actor.setCasting(new ArrayList<>());
 
